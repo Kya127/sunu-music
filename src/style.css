@@ -1,0 +1,93 @@
+/* ===== IMPORT FONT ===== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ===== VARIABLES ===== */
+:root {
+  --color-emerald:     #00C896;
+  --color-orange:      #FF8A00;
+  --color-purple:      #6D4AFF;
+  --color-dark:        #0F172A;
+  --color-dark-card:   #1E293B;
+  --color-dark-hover:  #263348;
+  --color-text:        #F8FAFC;
+  --color-text-muted:  #94A3B8;
+  --color-border:      #334155;
+
+  --gradient-brand: linear-gradient(135deg, #00C896, #FF8A00, #6D4AFF);
+
+  --sidebar-width: 220px;
+  --player-height: 80px;
+  --header-height: 64px;
+
+  --radius-sm:  6px;
+  --radius-md:  12px;
+  --radius-lg:  20px;
+
+  --transition: 0.2s ease;
+}
+
+/* ===== RESET ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--color-dark);
+  color: var(--color-text);
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* ===== LAYOUT ===== */
+#app-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-layout {
+  display: flex;
+  flex: 1;
+  padding-bottom: var(--player-height);
+}
+
+.main-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+}
+
+.content-area {
+  flex: 1;
+  padding-top: var(--header-height);
+  overflow-y: auto;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .main-area {
+    margin-left: 0;
+    padding-bottom: 60px; /* BottomNav */
+  }
+}
