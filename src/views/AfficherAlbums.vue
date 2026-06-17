@@ -1,15 +1,7 @@
 <template>
-  <div class="home">
-    <div class="home-content">
-
-      <!-- Hero Banner -->
-      <HeroBanner />
-
-      <!-- Trending Now -->
-      <section class="section">
+    <section class="section">
         <div class="section-header">
-          <h2 class="section-titre">Tendances</h2>
-          <button class="btn-view-all">Voir tout</button>
+          <h2 class="section-titre">Tous les albums</h2><br>
         </div>
         <div class="albums-scroll">
           <AlbumCard
@@ -18,50 +10,7 @@
             :album="album"
           />
         </div>
-
-      </section>
-
-      <!-- New Releases -->
-      <section class="section">
-        <div class="section-header">
-          <h2 class="section-titre">Recents</h2>
-          <button class="btn-view-all">Voir tous</button>
-        </div>
-        <div class="albums-scroll">
-          <AlbumCard
-            v-for="album in albumsRecents"
-            :key="album.id"
-            :album="album"
-          />
-        </div>
-      </section>
-
-      <!-- Discover Artists -->
-      <section class="section">
-        <div class="section-header">
-          <h2 class="section-titre">Artists</h2>
-          <button class="btn-refresh">
-            <RefreshCw :size="16" />
-          </button>
-        </div>
-        <div class="artists-list">
-          <div
-            v-for="artiste in artistes"
-            :key="artiste.id"
-            class="artist-item"
-          >
-            <img :src="artiste.avatar" :alt="artiste.nom" class="artist-avatar" />
-            <div class="artist-info">
-              <p class="artist-nom">{{ artiste.nom }}</p>
-              <p class="artist-listeners">{{ artiste.listeners }} Listeners</p>
-            </div>
-            <button class="btn-follow">Follow</button>
-          </div>
-        </div>
-      </section>
-
-    </div>
-  </div>
+    </section>
 </template>
 
 <script>
@@ -69,11 +18,12 @@ import { RefreshCw } from 'lucide-vue-next'
 import HeroBanner from '../components/ui/HeroBanner.vue'
 import AlbumCard from '../components/music/AlbumCard.vue'
 import { albums, artistes,albumFeatured } from '../data/album.js'
+import AlbumView from './AlbumView.vue'
 
 export default {
   name: 'HomeView',
 
-  components: { HeroBanner, AlbumCard, RefreshCw },
+  components: { HeroBanner, AlbumCard, AlbumView },
 
   data() {
     return {
@@ -84,14 +34,12 @@ export default {
 
   computed: {
     albumsTrending() {
-      return this.albums.slice(0, 5)
-    },
-    albumsRecents() {
-      return this.albums.slice(2, 6)
+      return this.albums.slice(0, 8)
     }
   }
 }
 </script>
+
 
 <style scoped>
 .home {
@@ -143,6 +91,7 @@ export default {
 /* Albums scroll horizontal */
 .albums-scroll {
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   overflow-x: auto;
   padding-bottom: 12px;

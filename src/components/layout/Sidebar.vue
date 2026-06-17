@@ -59,11 +59,11 @@ export default {
   data() {
     return {
       menuItems: [
-        { name: 'Home',    path: '/',        icon: 'Home'    },
-        { name: 'Albums',  path: '/AlbumView',   icon: 'Disc3'},
+        { name: 'Accueil',    path: '/',        icon: 'Home'    },
+        { name: 'Albums',  path: '/listeAlbum',   icon: 'Disc3'},
     ],
     collectionItems: [
-        { name: 'Liked Songs',path: '/liked',    icon: 'Heart'},
+        { name: 'Favoris',path: '/liked',    icon: 'Heart'},
         { name: 'Artists', path: '/artists', icon: 'Mic2'},
     ]
     }
@@ -95,16 +95,20 @@ export default {
   padding: 0 8px;
 }
 
-.logo-img {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-}
-
-.logo-text {
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 22px;
   font-weight: 700;
-  color: var(--color-text);
+}
+
+.logo::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1D9E75;
 }
 
 /* Nav */
@@ -182,19 +186,5 @@ export default {
 }
 
 
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 15px;
-  font-weight: 500;
-}
 
-.logo::before {
-  content: "";
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #1D9E75;
-}
 </style>

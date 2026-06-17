@@ -13,7 +13,9 @@
 
         <!-- ICI le routeur change de page -->
         <main class="content-area">
-          <router-view @jouer-piste="mettreAJourPiste" />
+          <router-view 
+          :pisteActive="pisteActuelle"
+          @jouer-piste="mettreAJourPiste" />
         </main>
 
       </div>
@@ -58,7 +60,7 @@ export default {
     // Cette méthode est appelée quand un enfant émet 'jouer-piste'
     mettreAJourPiste(piste) {
       this.pisteActuelle = piste
-      console.log('🎵 Piste reçue dans App.vue :', piste.titre)
+      console.log(piste.titre)
     }
   }
 }

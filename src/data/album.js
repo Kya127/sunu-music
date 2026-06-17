@@ -9,10 +9,10 @@ export const albums = [
     duree: "48 min 24 sec",
     nbPistes: 12,
     pistes: [
-      { id: 1, titre: "Gorée Memories",   artiste: "Youssou N'Dour",                    duree: "4:12", audio: "" },
-      { id: 2, titre: "Sandaga Rush",     artiste: "Youssou N'Dour, Dip Doundou Guiss", duree: "3:45", audio: "" },
-      { id: 3, titre: "Mbalax Symphony",  artiste: "Youssou N'Dour",                    duree: "5:20", audio: "" },
-      { id: 4, titre: "Atlantic Sunset",  artiste: "Youssou N'Dour",                    duree: "4:02", audio: "" },
+      { id: 1, titre: "Gorée Memories",   artiste: "Youssou N'Dour",                    duree: "4:12", audio: "/audios/song1.mp3" },
+      { id: 2, titre: "Sandaga Rush",     artiste: "Youssou N'Dour, Dip Doundou Guiss", duree: "3:45", audio: "/audios/song2.mp3" },
+      { id: 3, titre: "Mbalax Symphony",  artiste: "Youssou N'Dour",                    duree: "5:20", audio: "/audios/song3.mp3" },
+      { id: 4, titre: "Atlantic Sunset",  artiste: "Youssou N'Dour",                    duree: "4:02", audio: "/audios/song1.mp3" },
     ]
   },
   {
@@ -91,7 +91,7 @@ export const albums = [
     titre: "Galsen Rap Vol. 4",
     artiste: "Various Artists",
     annee: 2024,
-    cover: "https://images.unsplash.com/photo-1547355253-ff0740f859b4?w=300&h=300&fit=crop",
+    cover: "/images/marcela.jpg",
     type: "ALBUM",
     duree: "60 min",
     nbPistes: 15,
@@ -125,8 +125,8 @@ export const artistes = [
 
 export const albumFeatured = {
   id: 1,
-  titre: "Dakar Rhythms",
+  titre: "Dakar Rythms",
   artiste: "Youssou N'Dour",
-  description: "Discover the soul of Senegal with the latest exclusive album. Immerse yourself in the authentic sounds of Mbalax",
+  description: "A la découverte du coeur de la culture musicale sénégalaise. Plongez dans les sons authentiques sénégalaise",
   cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1200&h=500&fit=crop",
 }
