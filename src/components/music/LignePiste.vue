@@ -27,6 +27,7 @@
 
 <script>
 import { Music } from 'lucide-vue-next'
+import { useFavoriteStore } from '../../stores/favoriteStore'
 
 export default {
   name: 'LignePiste',
@@ -46,7 +47,11 @@ export default {
     pisteActive: {
       type: Object,
       default: null   // la piste en cours de lecture (peut être vide)
-    }
+    },
+   albumId:{
+    type: Number,
+    required:true
+   }
   },
 
   computed: {
@@ -62,7 +67,13 @@ export default {
     // on remonte l'info au parent avec $emit
     jouerCettePiste() {
       this.$emit('jouer-piste', this.piste)
-    }
+    },
+
+  toggleFav() {
+  this.favoriteStore.toggleFavorite(
+    this.albumId,
+    this.piste.id )
+},
   }
 }
 </script>

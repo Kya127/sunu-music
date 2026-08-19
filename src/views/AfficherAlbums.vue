@@ -1,5 +1,39 @@
 <template>
-    <section class="section">
+  <div class="home">
+    <div class="home-content">
+
+      <!-- Résultats de recherche -->
+      
+      <div v-if="searchStore.recherche" class="section">
+        <div class="section-header">
+          <h2 class="section-titre">
+            Résultats pour "{{searchStore.recherche }}"
+            <span class="resultats-count">({{ albumsFiltres.length }})</span>
+          </h2>
+        </div>
+
+        <!-- Aucun résultat -->
+        <div v-if="albumsFiltres.length === 0" class="aucun-resultat">
+          <Music :size="48" />
+          <p>Aucun album trouvé pour "{{ searchStore.recherche }}"</p>
+        </div>
+
+        <!-- Albums filtrés -->
+        <div v-else class="albums-scroll">
+          <AlbumCard
+            v-for="album in albumsFiltres"
+            :key="album.id"
+            :album="album"
+          />
+        </div>
+      </div>
+
+      <!-- Contenu normal si pas de recherche -->
+      <template v-else>
+
+        
+        
+      <section class="section">
         <div class="section-header">
           <h2 class="section-titre">Tous les albums</h2><br>
         </div>
@@ -10,8 +44,14 @@
             :album="album"
           />
         </div>
-    </section>
+      </section>
+      </template>
+
+    </div>
+  </div>
 </template>
+
+
 
 <script>
 import { RefreshCw } from 'lucide-vue-next'
@@ -19,6 +59,7 @@ import HeroBanner from '../components/ui/HeroBanner.vue'
 import AlbumCard from '../components/music/AlbumCard.vue'
 import { albums, artistes,albumFeatured } from '../data/album.js'
 import AlbumView from './AlbumView.vue'
+import { useSearchStore } from '../stores/searchStore'
 
 export default {
   name: 'HomeView',
@@ -29,12 +70,25 @@ export default {
     return {
       albums,
       artistes,
+      searchStore: useSearchStore()
     }
   },
 
   computed: {
     albumsTrending() {
       return this.albums.slice(0, 8)
+    },
+
+
+    // Albums filtrés selon la recherche en temps réel
+    albumsFiltres() {
+      const texte = this.searchStore.recherche.toLowerCase()
+      return this.albums.filter(album => 
+        // Cherche dans le titre
+        album.titre.toLowerCase().includes(texte) ||
+        // Cherche aussi dans l'artiste
+        album.artiste.toLowerCase().includes(texte)
+      )
     }
   }
 }

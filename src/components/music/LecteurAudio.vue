@@ -125,6 +125,8 @@ import {
   SkipForward, Repeat, Mic2, ListMusic, Volume2, VolumeX
 } from 'lucide-vue-next'
 
+import { useFavoriteStore } from '../../stores/favoriteStore'
+
 export default {
   name: 'LecteurAudio',
 
@@ -133,39 +135,52 @@ export default {
     SkipForward, Repeat, Mic2, ListMusic, Volume2, VolumeX
   },
 
-  // Reçoit la piste depuis App.vue
   props: {
     piste: {
       type: Object,
       default: null
+    },
+
+    albumId: {
+      type: Number,
+      required: true
     }
   },
 
   data() {
     return {
-      enLecture: false,      // true = en cours de lecture
-      progression: 0,        // 0 à 100 (pourcentage)
-      tempsActuel: 0,        // en secondes
-      duree: 0,              // en secondes
-      volume: 70,            // 0 à 100
-      muet: false,           // true = son coupé
-      aleatoire: false,      // true = lecture aléatoire
-      repetition: false,     // true = répétition activée
-      estFavori: false       // true = piste dans les favoris
+      enLecture: false,
+      progression: 0,
+      tempsActuel: 0,
+      duree: 0,
+      volume: 70,
+      muet: false,
+      aleatoire: false,
+      repetition: false,
+
+      favoriteStore: useFavoriteStore()
     }
   },
 
   computed: {
-    // Convertit les secondes en mm:ss
     tempsActuelFormate() {
       return this.formaterTemps(this.tempsActuel)
     },
+
     dureeFormatee() {
       return this.formaterTemps(this.duree)
+    },
+
+    estFavori() {
+      if (!this.piste) return false
+
+      return this.favoriteStore.isFavorite(
+        this.albumId,
+        this.piste.id
+      )
     }
   },
 
-  // Surveille les changements de piste
   watch: {
     piste(nouvellePiste) {
       if (nouvellePiste) {
@@ -175,28 +190,25 @@ export default {
   },
 
   methods: {
-    // Charge et lance la lecture d'une piste
+
     chargerEtJouer(piste) {
       const audio = this.$refs.audio
-      // Si la piste a un fichier audio on le charge
+
       if (piste.audio) {
         audio.src = piste.audio
       }
+
       audio.play()
         .then(() => { this.enLecture = true })
-        .catch(() => { 
-          // Pas de fichier audio → on simule juste la lecture
-          this.enLecture = true 
-        })
-      // Remet la progression à zéro
+        .catch(() => { this.enLecture = true })
+
       this.progression = 0
       this.tempsActuel = 0
-      this.estFavori = false
     },
 
-    // Alterne entre lecture et pause
     toggleLecture() {
       const audio = this.$refs.audio
+
       if (this.enLecture) {
         audio.pause()
         this.enLecture = false
@@ -206,76 +218,76 @@ export default {
       }
     },
 
-    // Met à jour la progression en temps réel
     mettreAJourProgression() {
       const audio = this.$refs.audio
+
       if (audio.duration) {
         this.tempsActuel = audio.currentTime
         this.progression = (audio.currentTime / audio.duration) * 100
       }
     },
 
-    // Récupère la durée totale quand le fichier est chargé
     mettreAJourDuree() {
       this.duree = this.$refs.audio.duration
     },
 
-    // Clique sur la barre de progression pour changer la position
     changerPosition(event) {
       const barre = event.currentTarget
       const clique = event.offsetX
       const largeur = barre.offsetWidth
       const pourcentage = (clique / largeur) * 100
+
       this.progression = pourcentage
-      this.$refs.audio.currentTime = (pourcentage / 100) * this.$refs.audio.duration
+      this.$refs.audio.currentTime =
+        (pourcentage / 100) * this.$refs.audio.duration
     },
 
-    // Change le volume
     changerVolume() {
       this.$refs.audio.volume = this.volume / 100
       if (this.volume > 0) this.muet = false
     },
 
-    // Active / désactive le son
     toggleMuet() {
       this.muet = !this.muet
       this.$refs.audio.muted = this.muet
     },
 
-    // Active / désactive la lecture aléatoire
     toggleAleatoire() {
       this.aleatoire = !this.aleatoire
     },
 
-    // Active / désactive la répétition
     toggleRepetition() {
       this.repetition = !this.repetition
       this.$refs.audio.loop = this.repetition
     },
 
-    // Ajoute / retire des favoris
+    // ⭐ FAVORIS (CORRIGÉ)
     toggleFavori() {
-      this.estFavori = !this.estFavori
+      if (!this.piste) return
+
+      this.favoriteStore.toggleFavorite(
+        this.albumId,
+        this.piste.id
+      )
     },
 
-    // Piste suivante (pour l'instant remet à zéro)
     pisteSuivante() {
       this.progression = 0
       this.tempsActuel = 0
     },
 
-    // Piste précédente (pour l'instant remet à zéro)
     pistePrecedente() {
       this.progression = 0
       this.tempsActuel = 0
       this.$refs.audio.currentTime = 0
     },
 
-    // Convertit les secondes en format mm:ss
     formaterTemps(secondes) {
       if (!secondes || isNaN(secondes)) return '0:00'
+
       const minutes = Math.floor(secondes / 60)
       const secs = Math.floor(secondes % 60)
+
       return `${minutes}:${secs.toString().padStart(2, '0')}`
     }
   }

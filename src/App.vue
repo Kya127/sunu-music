@@ -23,7 +23,8 @@
 
     <!-- LECTEUR EN DEHORS DU ROUTEUR -->
     <!-- Il survit à tous les changements de page -->
-    <LecteurAudio :piste="pisteActuelle" />
+    <LecteurAudio :piste="pisteActuelle" :albumId="pisteActuelle?.albumId"
+     />
 
     <!-- Navigation bas mobile -->
     <BottomNav />

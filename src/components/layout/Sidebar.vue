@@ -1,5 +1,3 @@
-
-
 <template>
   <aside class="sidebar">
 
@@ -35,8 +33,8 @@
 
     <!-- Bannière Premium -->
     <div class="sidebar-premium">
-      <p>Go Premium for ad-free experience</p>
-      <button class="btn-premium">Upgrade Now</button>
+      <p>Obtenez la version premium pour une expérience fun</p>
+      <button class="btn-premium">S'abonner</button>
     </div>
 
   </aside>
@@ -63,7 +61,7 @@ export default {
         { name: 'Albums',  path: '/listeAlbum',   icon: 'Disc3'},
     ],
     collectionItems: [
-        { name: 'Favoris',path: '/liked',    icon: 'Heart'},
+        { name: 'Favoris',path: '/favoris',    icon: 'Heart'},
         { name: 'Artists', path: '/artists', icon: 'Mic2'},
     ]
     }

@@ -61,13 +61,12 @@
         v-for="(piste, index) in album.pistes"
         :key="piste.id"
         :piste="piste"
+        :albumId="album.id"
         :numero="index + 1"
         :pisteActive="pisteActive"
         @jouer-piste="transmettreVerAppVue"
       />
-
     </div>
-
   </div>
 </template>
 
